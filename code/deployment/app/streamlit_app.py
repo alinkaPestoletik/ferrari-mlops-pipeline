@@ -4,7 +4,7 @@ import requests
 
 FASTAPI_URL = "http://fastapi:8000/predict"
 
-st.title("🏎️ Scuderia Ferrari Podium Predictor")
+st.title("Scuderia Ferrari Podium Predictor")
 
 grid = st.number_input("Starting Grid Position", min_value=1, max_value=30, value=1)
 laps = st.number_input("Laps Completed", min_value=0, max_value=100, value=50)

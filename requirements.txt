@@ -8,3 +8,6 @@ numpy
 mlflow-skinny
 joblib
 pydantic
+matplotlib
+seaborn
+jupyter
