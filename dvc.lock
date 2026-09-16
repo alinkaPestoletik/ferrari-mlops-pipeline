@@ -1,0 +1,20 @@
+schema: '2.0'
+stages:
+  data_engineering:
+    cmd: python code/datasets/data_engineering.py
+    deps:
+    - path: code/datasets/data_engineering.py
+      hash: md5
+      md5: d9973578319b6bf67d19ddf2507f5af9
+      size: 1910
+    - path: data/raw/
+      hash: md5
+      md5: bd7cbb3c8508ae963f1fbd2731e1c1e8.dir
+      size: 1998150
+      nfiles: 4
+    outs:
+    - path: data/processed/
+      hash: md5
+      md5: 06e9e76a9aebda6f2e15020cbc7f4850.dir
+      size: 53731
+      nfiles: 2

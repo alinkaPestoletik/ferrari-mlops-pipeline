@@ -1,0 +1,8 @@
+stages:
+  data_engineering:
+    cmd: python code/datasets/data_engineering.py
+    deps:
+      - code/datasets/data_engineering.py
+      - data/raw/
+    outs:
+      - data/processed/
