@@ -53,21 +53,26 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-### 2. Start the deployment services
-The API and Streamlit application must run in separate Docker containers. To build and start them, navigate to the deployment folder:
+### 2. Start the complete automated MLOps workflow
 
-```Bash
-cd code/deployment
-docker compose up --build -d
-```
+```python run_pipeline.py```
 
-### 3. Run the automated pipeline
+Every pipeline cycle performs the following steps:
 
-```Bash
-python run_pipeline.py
-```
-This script triggers dvc repro, which intelligently runs the data engineering and model training stages only if the code or raw data has changed.
-It automatically restarts the FastAPI container every 5 minutes to pick up the newly trained model.pkl via Docker Volumes.
+1. Run the DVC pipeline
+   ↓
+2. Process raw data
+   ↓
+3. Train and evaluate the model
+   ↓
+4. Save the updated model
+   ↓
+5. Build/start the Docker deployment
+   ↓
+6. Run FastAPI and Streamlit
+   ↓
+7. Reload the API with the latest trained model
+
 
 ## Accessing the application
 Once the Docker containers are running, you can access the services via your web browser:
