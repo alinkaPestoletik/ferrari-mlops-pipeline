@@ -11,8 +11,7 @@ def run_stage(name, command):
         raise e
 
 def automate_pipeline():
-    run_stage("Stage 1: Data Engineering", "dvc repro data_engineering")
-    run_stage("Stage 2: Model Training", "python code\\models\\train_model.py")
+    run_stage("Stage 1 & 2: DVC Data & Model Pipeline", "dvc repro")
     run_stage("Stage 3: API Restart", "cd code\\deployment && docker compose restart fastapi")
 
 if __name__ == "__main__":

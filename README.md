@@ -4,8 +4,10 @@ This repository contains an automated MLOps pipeline for predicting Scuderia Fer
 
 The project encompasses three main stages of the machine learning lifecycle, fully automated and containerized:
 1. **Data Engineering:** Loading, cleaning, and preprocessing historical F1 data.
-2. **Model Engineering:** Training a Random Forest classifier and logging metrics using MLflow.
+2. **Model Engineering:** Training a Random Forest classifier with hyperparameter tuning (GridSearchCV) and logging metrics using **MLflow**.
 3. **Deployment:** Serving the model via a **FastAPI** backend and interacting with it through a **Streamlit** frontend, both running in separate **Docker** containers.
+
+*Note: Stages 1 and 2 are orchestrated using Data Version Control to ensure reproducibility and efficient execution of the data pipeline.*
 
 ## Repository structure
 
@@ -15,13 +17,16 @@ The project encompasses three main stages of the machine learning lifecycle, ful
 │   ├── deployment         
 │   │   ├── api     
 │   │   └── app
+│   │   └── docker-compose.yml
 │   └── models      
 ├── data
 │   ├── processed 
 │   └── raw
 ├── models                
 ├── notebooks          
-├── requirements.txt   
+├── requirements.txt  
+├── dvc.yaml
+├── dvc.lock
 ├── run_pipeline.py  
 └── README.md
 ```
@@ -57,12 +62,12 @@ docker compose up --build -d
 ```
 
 ### 3. Run the automated pipeline
-To automate the data processing, model training, and model reloading, run the orchestrator script from the root directory in a new terminal window:
 
 ```Bash
 python run_pipeline.py
 ```
-This script will execute all three stages and automatically re-run the pipeline every 5 minutes. The FastAPI container is configured with Docker Volumes to automatically pick up the newly trained model.pkl upon restart.
+This script triggers dvc repro, which intelligently runs the data engineering and model training stages only if the code or raw data has changed.
+It automatically restarts the FastAPI container every 5 minutes to pick up the newly trained model.pkl via Docker Volumes.
 
 ## Accessing the application
 Once the Docker containers are running, you can access the services via your web browser:
